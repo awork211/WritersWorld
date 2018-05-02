@@ -1,23 +1,28 @@
 var express    = require("express"),
     app        = express(),
-    bodyParser = require("body-parser");
+    bodyParser = require("body-parser"),
+    mongoose   = require("mongoose");
     
-
+mongoose.connect("mongodb://localhost/writersworld");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
-var posts = [
-        {name: "Time Management", image: "https://images.unsplash.com/photo-1471174466996-0aa69dbda661?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e5ad6c80b0067af6b2859df12992457a&auto=format&fit=crop&w=1224&q=80"},
-        {name: "API Design", image: "https://images.unsplash.com/19/desktop.JPG?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=60f9c32ab84b0de2266d6afca2fabf4c&auto=format&fit=crop&w=1350&q=80"},
-        {name: "Work-life Balance", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c1b566f6cf95b8fe438961fd065158cd&auto=format&fit=crop&w=1350&q=80"},
-        {name: "Time Management", image: "https://images.unsplash.com/photo-1471174466996-0aa69dbda661?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e5ad6c80b0067af6b2859df12992457a&auto=format&fit=crop&w=1224&q=80"},
-        {name: "API Design", image: "https://images.unsplash.com/19/desktop.JPG?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=60f9c32ab84b0de2266d6afca2fabf4c&auto=format&fit=crop&w=1350&q=80"},
-        {name: "Work-life Balance", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c1b566f6cf95b8fe438961fd065158cd&auto=format&fit=crop&w=1350&q=80"}
-    ];
+var postSchema = new mongoose.Schema({
+    name: String,
+    image: String
+});
+
+var Post = mongoose.model("Post", postSchema);
 
 app.get("/", function(req, res){
-    res.render("index", {posts: posts});
+    Post.find({}, function(err, allPosts){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("index", {posts: allPosts});
+        }
+    });
 });
 
 app.get("/new", function(req, res){
@@ -27,9 +32,25 @@ app.get("/new", function(req, res){
 app.post("/", function(req, res){
    var name = req.body.name;
    var image = req.body.image;
-   var post = {name: name, image: image};
-   posts.push(post);
-   res.redirect("/");
+   var newPost = {name: name, image: image};
+   // create and save to db
+   Post.create(newPost, function(err, newlyCreated){
+    if(err){
+        console.log(err);
+    } else {
+        res.redirect("/");
+    }
+   });
+});
+
+app.get("/post/:id", function(req, res){
+    Post.findById(req.params.id, function(err, foundPost){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("show", {post: foundPost});
+        }
+    });
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){

@@ -10,7 +10,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 var postSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    content: String
 });
 
 var Post = mongoose.model("Post", postSchema);
@@ -32,7 +33,8 @@ app.get("/new", function(req, res){
 app.post("/", function(req, res){
    var name = req.body.name;
    var image = req.body.image;
-   var newPost = {name: name, image: image};
+   var content = req.body.content;
+   var newPost = {name: name, image: image, content: content};
    // create and save to db
    Post.create(newPost, function(err, newlyCreated){
     if(err){

@@ -71,7 +71,6 @@ app.post("/post/:id/comments", function(req, res){
             Comment.create(req.body.comment, function(err, comment){
                if(err){
                    console.log(err);
-                    console.log(req.body.comment);
                } else {
                    foundPost.comments.push(comment);
                    foundPost.save();

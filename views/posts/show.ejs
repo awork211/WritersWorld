@@ -1,0 +1,14 @@
+<% include ../partials/header %>
+<p><%= post.name %></p>
+<img src="<%= post.image %>">
+<p><%= post.content %></p>
+
+<p><a class="btn btn-success" href="/post/<%= post._id %>/comments/new">Add Comment</a></p>
+
+<% post.comments.forEach(function(comment){  %>
+    <p>
+        <strong><%= comment.author %></strong> - <%= comment.text %>
+    </p>
+<% }); %>
+
+<% include ../partials/footer %>

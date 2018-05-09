@@ -55,3 +55,8 @@
 .navbar-default .navbar-brand {
     color: #000000;
 }
+
+.panel-default {
+    width: 60%;
+    margin: 20px auto !important;
+}

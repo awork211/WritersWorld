@@ -14,6 +14,7 @@
     <div class="text-right">
         <p><a class="btn btn-success" href="/post/<%= post._id %>/comments/new">Add Comment</a></p>
     </div>
+    <h2>Comments</h2>
     <% post.comments.forEach(function(comment){  %>
     <div class="comment">
         <div class="row">
@@ -31,10 +32,9 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
-    <% }); %>
 </div>
+<% }); %>
 
 <% include ../partials/footer %>

@@ -7,7 +7,6 @@
 .post-show h1 {
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 20px;
-    font-weight: bold;
 }
 
 .post-show p {
@@ -58,5 +57,13 @@
 
 .panel-default {
     width: 60%;
-    margin: 20px auto !important;
+    margin: 20px 10px !important;
+}
+
+.text-right {
+    float: right;
+}
+
+h2 {
+    margin: 10px;
 }

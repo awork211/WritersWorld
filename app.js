@@ -2,14 +2,29 @@ var express    = require("express"),
     app        = express(),
     bodyParser = require("body-parser"),
     mongoose   = require("mongoose"),
+    passport   = require("passport"),
+    LocalStrategy = require("passport-local"),
     Post       = require("./models/post"),
-    Comment    = require("./models/comment");
+    Comment    = require("./models/comment"),
+    User       = require("./models/user");
     
     
 mongoose.connect("mongodb://localhost/writersworld");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
+
+// passport configuration
+app.use(require("express-session")({
+    secret: "writers post",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate())); //authenticate() from passportlocalMongoose in the user schema plugin
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get("/", function(req, res){
     Post.find({}, function(err, allPosts){
@@ -79,6 +94,39 @@ app.post("/post/:id/comments", function(req, res){
             });
         }
     });
+});
+
+// AUTH ROUTES BELOW
+app.get("/register", function(req, res){
+   res.render("register");
+});
+
+app.post("/register", function(req, res){
+   var newUser = new User({username: req.body.username});
+   User.register(newUser, req.body.password, function(err, user){
+       if(err){
+           return res.render("register");
+       }
+       passport.authenticate("local")(req, res, function(){
+          res.redirect("/"); 
+       });
+   });
+});
+
+app.get("/login", function(req, res){
+    res.render("login");
+});
+
+app.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/",
+        failureRedirect: "/login"
+    }), function(req, res){
+});
+
+app.get("/logout", function(req, res){
+    req.logout();
+    res.redirect("/");
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){

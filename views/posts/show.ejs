@@ -5,6 +5,7 @@
             <div class="post-show">
                 <h1><%= post.name %></h1>
                 <img class="img-responsive" src="<%= post.image %>">
+                <p><em>Written by <%= post.author.username %></em></p>
                 <hr>
                 <p><%= post.content %></p>
             </div>
@@ -22,7 +23,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <p>
-                            <strong><%= comment.author %></strong>
+                            <strong><%= comment.author.username %></strong>
                         </p>
                     </div>
                     <div class="panel-body">
@@ -34,7 +35,7 @@
             </div>
         </div>
     </div>
+    <% }); %>
 </div>
-<% }); %>
 
 <% include ../partials/footer %>

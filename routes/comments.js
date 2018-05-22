@@ -23,6 +23,10 @@ router.post("/post/:id/comments", isLoggedIn, function(req, res){
                if(err){
                    console.log(err);
                } else {
+                   // add id and username
+                   comment.author.id = req.user._id;
+                   comment.author.username = req.user.username;
+                   comment.save();
                    foundPost.comments.push(comment);
                    foundPost.save();
                    res.redirect("/post/" + foundPost._id);

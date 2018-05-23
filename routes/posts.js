@@ -35,6 +35,39 @@ router.get("/post/:id", function(req, res){
     });
 });
 
+router.get("/post/:id/edit", function(req, res){
+   Post.findById(req.params.id, function(err, foundPost){
+       if(err){
+           console.log(err);
+           res.redirect("/");
+       }
+       else {
+           res.render("posts/edit", {post: foundPost});
+       }
+   });
+});
+
+router.put("/post/:id", function(req, res){
+   Post.findByIdAndUpdate(req.params.id, req.body.post, function(err, updatedPost){
+      if(err){
+          res.redirect("/");
+      }
+      else {
+          res.redirect("/post/" + req.params.id);
+      }
+   });
+});
+
+router.delete("/post/:id", function(req, res){
+    Post.findByIdAndRemove(req.params.id, function(err){
+       if(err){
+           res.redirect("/");
+       }  else {
+           res.redirect("/");
+       }
+    });
+});
+
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();

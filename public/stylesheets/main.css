@@ -9,6 +9,11 @@
     margin-bottom: 20px;
 }
 
+.btn-danger {
+    display: inline;
+    margin-left: 10px;
+}
+
 .post-show p {
     margin-top: 20px;
     font-family: 'Montserrat', sans-serif;
@@ -33,9 +38,7 @@
     height: 200px;
 }
 
-.form-group textarea {
-    height: 250px;
-}
+
 
 .navbar-center {
     position: absolute;

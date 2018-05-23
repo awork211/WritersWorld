@@ -1,6 +1,7 @@
 var express    = require("express"),
     app        = express(),
     bodyParser = require("body-parser"),
+    methodOverride = require("method-override"),
     mongoose   = require("mongoose"),
     passport   = require("passport"),
     LocalStrategy = require("passport-local"),
@@ -9,11 +10,12 @@ var express    = require("express"),
     commentRoutes = require("./routes/comments"),
     authRoutes = require("./routes/index");
     
-    
+// app config
 mongoose.connect("mongodb://localhost/writersworld");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 
 // passport configuration
 app.use(require("express-session")({
@@ -23,7 +25,7 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate())); //authenticate() from passportlocalMongoose in the user schema plugin
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 

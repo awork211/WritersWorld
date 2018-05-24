@@ -6,10 +6,12 @@
                 <h1><%= post.name %></h1>
                 <img class="img-responsive" src="<%= post.image %>">
                 <p><em>Written by <%= post.author.username %></em></p>
-                <a class="btn btn-warning pull-left" href="/post/<%= post._id %>/edit">Edit</a>
+                <% if(currentUser && post.author.id.equals(currentUser._id)){ %>
+                <a class="btn btn-xs btn-warning pull-left" href="/post/<%= post._id %>/edit">Edit</a>
                 <form action="/post/<%= post._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger pull-left">Delete</button>
+                    <button class="btn btn-xs btn-danger pull-left">Delete</button>
                 </form>
+                <% } %>
                 <br><hr>
                 <p><%= post.content %></p>
             </div>
@@ -17,7 +19,7 @@
     </div>
     <hr>
     <div class="text-right">
-        <p><a class="btn btn-success" href="/post/<%= post._id %>/comments/new">Add Comment</a></p>
+        <a class="btn btn-success" href="/post/<%= post._id %>/comments/new">Add Comment</a>
     </div>
     <h2>Comments</h2>
     <% post.comments.forEach(function(comment){  %>
@@ -35,6 +37,12 @@
                             <%= comment.text %>
                         </p>
                     </div>
+                    <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                    <a id="editcomment" class="btn btn-xs btn-warning pull-left" href="/post/<%= post._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                    <form action="/post/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                        <input id="editcomment" type="submit" class="btn btn-xs btn-danger" value="Delete">
+                    </form>
+                    <% } %>
                 </div>
             </div>
         </div>

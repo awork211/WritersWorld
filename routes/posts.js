@@ -1,12 +1,13 @@
 var express = require("express"),
     router  = express.Router(),
-    Post    = require("../models/post");
+    Post    = require("../models/post"),
+    middleware = require("../middleware");
 
-router.get("/post/new", isLoggedIn, function(req, res){
+router.get("/post/new", middleware.isLoggedIn, function(req, res){
     res.render("posts/new");
 });
 
-router.post("/", isLoggedIn, function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
    var name = req.body.name;
    var image = req.body.image;
    var content = req.body.content;
@@ -35,7 +36,7 @@ router.get("/post/:id", function(req, res){
     });
 });
 
-router.get("/post/:id/edit", function(req, res){
+router.get("/post/:id/edit", middleware.checkPostOwnership, function(req, res){
    Post.findById(req.params.id, function(err, foundPost){
        if(err){
            console.log(err);
@@ -47,7 +48,7 @@ router.get("/post/:id/edit", function(req, res){
    });
 });
 
-router.put("/post/:id", function(req, res){
+router.put("/post/:id", middleware.checkPostOwnership, function(req, res){
    Post.findByIdAndUpdate(req.params.id, req.body.post, function(err, updatedPost){
       if(err){
           res.redirect("/");
@@ -58,7 +59,7 @@ router.put("/post/:id", function(req, res){
    });
 });
 
-router.delete("/post/:id", function(req, res){
+router.delete("/post/:id", middleware.checkPostOwnership, function(req, res){
     Post.findByIdAndRemove(req.params.id, function(err){
        if(err){
            res.redirect("/");
@@ -67,12 +68,5 @@ router.delete("/post/:id", function(req, res){
        }
     });
 });
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 module.exports = router;

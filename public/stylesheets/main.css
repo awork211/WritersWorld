@@ -1,3 +1,59 @@
+body {
+    background-color: #f5f7f8;
+}
+/* card css */
+.card {
+  background: white;
+  text-decoration: none;
+  color: #444;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  min-height: 100%;
+  position: relative;
+  top: 0;
+  transition: all .1s ease-in;
+}
+
+.card:hover {
+    top: -2px;
+    box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+}
+  
+article {
+    
+    padding: 20px;
+    background-color: white;
+}
+  
+.auth {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin: 2em 0 0 0;
+  }
+  
+.thumb {
+    padding-bottom: 10%;
+    background-size: cover;
+    background-position: center center;
+ }
+ 
+.read {
+    margin-top: 10px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Montserrat, cursive;
+    text-align: right;
+    text-decoration: none !important;
+}
+
+.read:hover {
+    color: #999;
+}
+/* card end */
+
 .post-show {
     width: 100%;
     margin: 0 auto;
@@ -29,16 +85,9 @@
   flex-wrap: wrap;
 }
 
-.thumbnail {
-    padding: 0;
+.navbar {
+    background-color: white;
 }
-
-.thumbnail img {
-    width: 100%;
-    height: 200px;
-}
-
-
 
 .navbar-center {
     position: absolute;
@@ -77,4 +126,29 @@ h2 {
 
 .formhead {
     text-align: center;
+    font-family: Montserrat;
+}
+
+.navbar-brand {
+    font-family: Cookie, cursive;
+    font-size: 40px;
+}
+
+li a {
+    font-family: Montserrat;
+}
+
+.frm {
+    width: 40%;
+    margin: 25px auto;
+}
+
+.back {
+    font-family: Montserrat;
+    color: #999;
+}
+
+.back:hover {
+    text-decoration: none;
+    color: #337ab7;
 }

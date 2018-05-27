@@ -3,12 +3,19 @@
   <div class="row display-flex">
     <% posts.forEach(function(post){ %>
       <div class="col-md-3 col-sm-6">
-        <div class="thumbnail">
-          <img class="img-responsive" src="<%= post.image %>">
-            <div class="caption">
-              <p><%= post.name %></p>  
-            </div>
-            <p><a href="/post/<%= post._id %>" class="btn btn-primary">Read Story</a></p>
+        <div class="thumb">
+          <div class="card">
+            <img class="img-responsive" src="<%= post.image %>">
+              <article class="border border-light">
+                <h1><%= post.name %></h1>
+                <p><a href="/post/<%= post._id %>" class="read">Read Story 
+                <i class="far fa-arrow-alt-circle-right"></i></a>
+                </p>
+                <span class="auth">
+                  <%= post.author.username %>
+                </span>
+              </article>
+          </div>
         </div>
       </div>
     <% }); %>

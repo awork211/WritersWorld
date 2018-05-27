@@ -19,7 +19,7 @@
     </div>
     <hr>
     <div class="text-right">
-        <a class="btn btn-success" href="/post/<%= post._id %>/comments/new">Add Comment</a>
+        <a class="btn btn-success" href="/post/<%= post._id %>/comments/new"><i class="fas fa-plus"></i> Add Comment</a>
     </div>
     <h2>Comments</h2>
     <% post.comments.forEach(function(comment){  %>
@@ -29,7 +29,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <p>
-                            <strong><%= comment.author.username %></strong>
+                            <strong><i class="far fa-user"></i> <%= comment.author.username %></strong>
                         </p>
                     </div>
                     <div class="panel-body">

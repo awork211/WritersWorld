@@ -39,7 +39,7 @@ router.get("/post/:id", function(req, res){
 router.get("/post/:id/edit", middleware.checkPostOwnership, function(req, res){
    Post.findById(req.params.id, function(err, foundPost){
        if(err){
-           console.log(err);
+           req.flash("error", "Post not found.");
            res.redirect("/");
        }
        else {
@@ -51,9 +51,11 @@ router.get("/post/:id/edit", middleware.checkPostOwnership, function(req, res){
 router.put("/post/:id", middleware.checkPostOwnership, function(req, res){
    Post.findByIdAndUpdate(req.params.id, req.body.post, function(err, updatedPost){
       if(err){
+          req.flash("error", "Could not update post.");
           res.redirect("/");
       }
       else {
+          req.flash("success", "Post successfully updated!");
           res.redirect("/post/" + req.params.id);
       }
    });
@@ -62,8 +64,10 @@ router.put("/post/:id", middleware.checkPostOwnership, function(req, res){
 router.delete("/post/:id", middleware.checkPostOwnership, function(req, res){
     Post.findByIdAndRemove(req.params.id, function(err){
        if(err){
+           req.flash("error", "Something went wrong!");
            res.redirect("/");
        }  else {
+           req.flash("success", "Post was removed.");
            res.redirect("/");
        }
     });

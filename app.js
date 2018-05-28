@@ -10,11 +10,9 @@ var express    = require("express"),
     postRoutes = require("./routes/posts"),
     commentRoutes = require("./routes/comments"),
     authRoutes = require("./routes/index");
-    
-// mongoose.connect("mongodb://localhost/writersworld");
-mongoose.connect("mongodb://aaronn:aaronn@ds237770.mlab.com:37770/writersworld");
 
 // app config
+mongoose.connect(process.env.DATABASEURL);
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));

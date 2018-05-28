@@ -79,7 +79,16 @@ article {
     text-align: left;
 }
 
-
+@media only screen and (max-width: 600px) {
+    .post-show p {
+        margin-top: 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 15px;
+        line-height: 1.58;
+        letter-spacing: -.003em;
+        text-align: center;
+    }
+}
 .row.display-flex {
   display: flex;
   flex-wrap: wrap;

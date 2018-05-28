@@ -86,7 +86,7 @@ article {
         font-size: 15px;
         line-height: 1.58;
         letter-spacing: -.003em;
-        text-align: center;
+        text-align: left;
     }
 }
 .row.display-flex {

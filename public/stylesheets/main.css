@@ -159,6 +159,12 @@ li a {
     margin: 25px auto;
 }
 
+@media only screen and (max-width: 600px) {
+    .frm {
+        width: 90% !important;
+    }
+}
+
 .back {
     font-family: Montserrat;
     color: #999;
